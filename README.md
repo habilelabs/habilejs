@@ -10,7 +10,7 @@ node
 Install this package globally using
 
 ```
-npm install -g starter-kit-generator
+npm install -g habilejs
 ```
 
 ### Usage
