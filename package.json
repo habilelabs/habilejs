@@ -11,7 +11,7 @@
     "url": "git+https://github.com/habilelabs/habilejs.git"
   },
   "bin": {
-    "starter-kit-generator": "./index.js"
+    "habilejs": "./index.js"
   },
   "keywords": [
     "nodejs",
