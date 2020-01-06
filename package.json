@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "commander": "^4.0.1",
+    "prompts": "^2.3.0",
     "request": "^2.88.0",
     "tar-pack": "^3.4.1"
   }
