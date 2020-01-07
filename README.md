@@ -44,4 +44,4 @@ multiple instances equal to the number of CPU cores will be created upon running
 Once the app is created, `cd` into the app and run `npm start`.
 
 ### Starter kit
-The starter kit can be found [here](`https://github.com/habilelabs/node-mongo-starter-kit`)
+The starter kit can be found [here](https://github.com/habilelabs/node-mongo-starter-kit)
