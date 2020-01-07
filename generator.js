@@ -5,6 +5,8 @@ const unpack = require('tar-pack').unpack;
 const path = require('path');
 const request = require('request');
 
+const envs = ["development", "production"];
+
 const questions = [
     { 
         type: 'text', 
@@ -49,8 +51,7 @@ const questions = [
         type: 'select', 
         name: 'env', 
         message: 'Please select environment to set', 
-        choices: ["development", "production"],
-        initial: 0
+        choices: envs
     }
 ];
 
@@ -112,11 +113,11 @@ const installNpmPackages = (root) => {
 
 const addDotEnv = (root, data) => {
   const envPath = path.join(root, ".env");
-  fs.writeFileSync(envPath, `PORT=${data.port}
-  ENV="${data.env || "development"}"
-  IS_CLUSTERING_ENABLED=${data.enableClustering}
-  SECRET="some secret"
-  MONGO_URI="mongodb://localhost:27017/${data.databaseName}"`);
+  fs.writeFileSync(envPath, `PORT=${data.portNumber}
+ENV="${envs[parseInt(data.env)]}"
+IS_CLUSTERING_ENABLED=${data.enableClustering}
+SECRET="some secret"
+MONGO_URI="mongodb://localhost:27017/${data.dbName}"`);
 }
 
 (async () => {
@@ -146,8 +147,8 @@ const addDotEnv = (root, data) => {
         console.log("NOTE:- Don't forget to start mongoDB :)")
         console.log();
         console.log("Visit https://github.com/habilelabs/node-mongo-starter-kit for more information on this starter kit.");
-        
     } catch (err) {
-        console.log(err);
+        console.log(err.message);
+        process.exit(1);
     }
   })();
