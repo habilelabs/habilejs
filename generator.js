@@ -107,7 +107,7 @@ const getPackageJsonContents = (appName, path) => {
 }
 const installNpmPackages = (root) => {
   console.log("Installing dependencies...");
-  execSync(`cd ${root} && npm i`, {stdio: 'inherit'});
+  execSync(`cd "${root}" && npm i`, {stdio: 'inherit'});
   console.log("Dependencies installed.");
 }
 
