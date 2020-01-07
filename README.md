@@ -20,24 +20,24 @@ This will prompt for a few questions to gather information about the app to be c
 ### Questions
 * Enter project name
 
-This name will be the name of your app.
+    This name will be the name of your app.
 
 * Enter port number
 
-Port number at which you desire to run your app.
+    Port number at which you desire to run your app.
 
 * Enter database name
 
-Database name to be used by your app
+    Database name to be used by your app
 
 * Do you want to enable clustering through child_process module?
 
-Whether or not to enable clustering of your app. If enabled,
+    Whether or not to enable clustering of your app. If enabled,
 multiple instances equal to the number of CPU cores will be created upon running
 
 * Please select environment to set
 
-Environment to set for your app. It can be either `development` or `production`.
+    Environment to set for your app. It can be either `development` or `production`.
 
 > All these settings can be changed later by editing `.env` file.
 
