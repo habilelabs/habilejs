@@ -47,6 +47,18 @@ const questions = [
         message: 'Do you want to enable clustering through child_process module?', 
         default: false 
     },
+    { 
+        type: 'confirm', 
+        name: 'enableDebugLogs', 
+        message: 'Do you want to enable Debug logs for the app?', 
+        default: false 
+    },
+    { 
+        type: 'confirm', 
+        name: 'enableAccessLogs', 
+        message: 'Do you want to enable Access logs for the app?', 
+        default: false 
+    },
     {
         type: 'select', 
         name: 'env', 
@@ -116,12 +128,13 @@ const addDotEnv = (root, data) => {
   fs.writeFileSync(envPath, `PORT=${data.portNumber}
 ENV="${envs[parseInt(data.env)]}"
 IS_CLUSTERING_ENABLED=${data.enableClustering}
+ENABLE_DEBUG_LOGS=${data.enableDebugLogs}
+ENABLE_ACCESS_LOGS=${data.enableAccessLogs}
 SECRET="some secret"
 MONGO_URI="mongodb://localhost:27017/${data.dbName}"`);
 }
 
 (async () => {
-
     try {
         const response = await prompts(questions);
         const root = path.resolve(response.projectName);
@@ -130,6 +143,9 @@ MONGO_URI="mongodb://localhost:27017/${data.dbName}"`);
         const templateFormat = "tarball";
         const templateHost = "api.github.com";
         const templateHostUser = "habilelabs";
+        console.log();
+        console.log("Note:- These settings can be changed later in .env file");
+        console.log();
         console.log("Creating app...");
         await createApp(root, appName, templateToInstall, templateFormat, templateHost, templateHostUser);
         console.log("Created folder structure.");
@@ -144,7 +160,7 @@ MONGO_URI="mongodb://localhost:27017/${data.dbName}"`);
         console.log(`Start your app by moving into the "${appName}" directory and running
         npm start`);
         console.log();
-        console.log("NOTE:- Don't forget to start mongoDB :)")
+        console.log("NOTE:- Don't forget to start mongoDB :)");
         console.log();
         console.log("Visit https://github.com/habilelabs/node-mongo-starter-kit for more information on this starter kit.");
     } catch (err) {
