@@ -1,11 +1,15 @@
 const prompts = require('prompts');
+const {Command} = require("commander");
 const fs = require("fs");
 const {execSync} = require('child_process');
 const unpack = require('tar-pack').unpack;
 const path = require('path');
 const request = require('request');
+const { version, name } = require('./package.json');
 
 const envs = ["development", "production"];
+
+
 
 const questions = [
     { 
@@ -123,30 +127,41 @@ MONGO_URI="mongodb://localhost:27017/${data.dbName}"`);
 (async () => {
 
     try {
-        const response = await prompts(questions);
-        const root = path.resolve(response.projectName);
-        const appName = path.basename(root);
-        const templateToInstall = "node-mongo-starter-kit";
-        const templateFormat = "tarball";
-        const templateHost = "api.github.com";
-        const templateHostUser = "habilelabs";
-        console.log("Creating app...");
-        await createApp(root, appName, templateToInstall, templateFormat, templateHost, templateHostUser);
-        console.log("Created folder structure.");
-        const pjPath = path.join(root, "package.json");
-        const contents = getPackageJsonContents(appName, pjPath);
-        fs.writeFileSync(pjPath, JSON.stringify(contents, null, 4));
-        addDotEnv(root, response);
-        console.log("Created '.env' file");
-        installNpmPackages(root);
-        console.log("App created.");
-        console.log();
-        console.log(`Start your app by moving into the "${appName}" directory and running
-        npm start`);
-        console.log();
-        console.log("NOTE:- Don't forget to start mongoDB :)")
-        console.log();
-        console.log("Visit https://github.com/habilelabs/node-mongo-starter-kit for more information on this starter kit.");
+        const program = new Command(name)
+            .version(version)
+            .usage(`init`)
+            .action(async () => {
+                if (process.argv.indexOf('init') > -1) {
+                    const response = await prompts(questions);
+                    if(response.projectName) {
+                        const root = path.resolve(response.projectName);
+                        const appName = path.basename(root);
+                        const templateToInstall = "node-mongo-starter-kit";
+                        const templateFormat = "tarball";
+                        const templateHost = "api.github.com";
+                        const templateHostUser = "habilelabs";
+                        console.log("Creating app...");
+                        await createApp(root, appName, templateToInstall, templateFormat, templateHost, templateHostUser);
+                        console.log("Created folder structure.");
+                        const pjPath = path.join(root, "package.json");
+                        const contents = getPackageJsonContents(appName, pjPath);
+                        fs.writeFileSync(pjPath, JSON.stringify(contents, null, 4));
+                        addDotEnv(root, response);
+                        console.log("Created '.env' file");
+                        installNpmPackages(root);
+                        console.log("App created.");
+                        console.log();
+                        console.log(`Start your app by moving into the "${appName}" directory and running 
+                            npm start`);
+                        console.log();
+                        console.log("NOTE:- Don't forget to start mongoDB :)");
+                        console.log();
+                        console.log("Visit https://github.com/habilelabs/node-mongo-starter-kit for more information on this starter kit.");
+                    }
+                } else {
+                    console.log('Usage: habilejs init')
+                }
+            }).parse(process.argv);
     } catch (err) {
         console.log(err.message);
         process.exit(1);
