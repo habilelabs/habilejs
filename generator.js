@@ -67,7 +67,7 @@ const checkIfDirExistsOrEmpty = (root) => {
     // Directory doesn't exists, OK to continue
     return { exists: false };
   }
-}
+};
 
 const downloadAndUnPackKit = (root, templateToInstall, templateFormat, templateHost, templateHostUser) => {
   return new Promise((resolve, reject)=>{
@@ -83,7 +83,7 @@ const downloadAndUnPackKit = (root, templateToInstall, templateFormat, templateH
       resolve();
     }));
   });
-}
+};
 
 const createApp = (root, appName, templateToInstall, templateFormat, templateHost, templateHostUser) => {
   const dirInfo = checkIfDirExistsOrEmpty(root);
@@ -97,7 +97,7 @@ const createApp = (root, appName, templateToInstall, templateFormat, templateHos
   }
   // directory is empty, OK to continue
   return downloadAndUnPackKit(root, templateToInstall, templateFormat, templateHost, templateHostUser);
-}
+};
 const getPackageJsonContents = (appName, path) => {
   const packageJson = require(path);
   return {
@@ -108,12 +108,12 @@ const getPackageJsonContents = (appName, path) => {
     dependencies: packageJson.dependencies,
     devDependencies: packageJson.devDependencies,
   }
-}
+};
 const installNpmPackages = (root) => {
   console.log("Installing dependencies...");
   execSync(`cd "${root}" && npm i`, {stdio: 'inherit'});
   console.log("Dependencies installed.");
-}
+};
 
 const addDotEnv = (root, data) => {
   const envPath = path.join(root, ".env");
@@ -122,7 +122,7 @@ ENV="${envs[parseInt(data.env)]}"
 IS_CLUSTERING_ENABLED=${data.enableClustering}
 SECRET="some secret"
 MONGO_URI="mongodb://localhost:27017/${data.dbName}"`);
-}
+};
 
 (async () => {
 
